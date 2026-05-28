@@ -1,0 +1,1393 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>삼성생명 × 크랩스 PoC 제안 시각화 | 2026.05.28 회의록</title>
+<link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --samsung-blue: #1428A0;
+    --samsung-light: #4A6CF7;
+    --crabs-primary: #FF5A36;
+    --crabs-dark: #1A1A2E;
+    --crabs-accent: #FFB800;
+    --bg-gray: #F7F9FC;
+    --text-dark: #1A1A2E;
+    --text-mid: #4A5568;
+    --text-light: #718096;
+    --border-light: #E2E8F0;
+    --success: #00C896;
+    --warning: #FF9500;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg-gray);
+    color: var(--text-dark);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  .container { max-width: 1280px; margin: 0 auto; padding: 0 24px; }
+
+  .hero {
+    background: linear-gradient(135deg, var(--samsung-blue) 0%, var(--crabs-dark) 100%);
+    color: white;
+    padding: 80px 0 100px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -50%; right: -10%;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(255,90,54,0.3) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -30%; left: -10%;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(74,108,247,0.3) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .hero-content { position: relative; z-index: 2; }
+  .hero-tag {
+    display: inline-block;
+    padding: 8px 20px;
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 100px;
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 24px;
+  }
+  .hero h1 {
+    font-size: 56px;
+    font-weight: 800;
+    line-height: 1.15;
+    margin-bottom: 20px;
+    letter-spacing: -0.02em;
+  }
+  .hero h1 .accent {
+    background: linear-gradient(135deg, var(--crabs-primary) 0%, var(--crabs-accent) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .hero-subtitle {
+    font-size: 20px;
+    opacity: 0.85;
+    margin-bottom: 40px;
+    max-width: 760px;
+    font-weight: 400;
+  }
+  .hero-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 32px;
+    padding-top: 32px;
+    border-top: 1px solid rgba(255,255,255,0.15);
+  }
+  .meta-item .meta-label {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    opacity: 0.6;
+    margin-bottom: 6px;
+  }
+  .meta-item .meta-value {
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+  section { padding: 80px 0; }
+  .section-tag {
+    display: inline-block;
+    padding: 6px 16px;
+    background: rgba(20,40,160,0.08);
+    color: var(--samsung-blue);
+    font-size: 13px;
+    font-weight: 600;
+    border-radius: 100px;
+    margin-bottom: 16px;
+    letter-spacing: 0.02em;
+  }
+  .section-tag.crabs {
+    background: rgba(255,90,54,0.1);
+    color: var(--crabs-primary);
+  }
+  .section-title {
+    font-size: 40px;
+    font-weight: 800;
+    margin-bottom: 16px;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+  }
+  .section-desc {
+    font-size: 17px;
+    color: var(--text-mid);
+    margin-bottom: 56px;
+    max-width: 720px;
+  }
+
+  .pain-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-bottom: 40px;
+  }
+  .pain-card {
+    background: white;
+    border-radius: 20px;
+    padding: 32px;
+    border: 1px solid var(--border-light);
+    position: relative;
+    transition: all 0.3s;
+  }
+  .pain-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.06);
+  }
+  .pain-number {
+    position: absolute;
+    top: 24px; right: 24px;
+    font-size: 72px;
+    font-weight: 900;
+    color: rgba(20,40,160,0.06);
+    line-height: 1;
+  }
+  .pain-icon {
+    width: 56px; height: 56px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #FFEAE3, #FFF4D6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    margin-bottom: 20px;
+  }
+  .pain-card h3 {
+    font-size: 19px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    line-height: 1.35;
+  }
+  .pain-card p {
+    font-size: 14.5px;
+    color: var(--text-mid);
+    line-height: 1.65;
+  }
+  .pain-quote {
+    margin-top: 16px;
+    padding: 12px 14px;
+    background: var(--bg-gray);
+    border-left: 3px solid var(--crabs-primary);
+    border-radius: 8px;
+    font-size: 13px;
+    color: var(--text-mid);
+    font-style: italic;
+    line-height: 1.55;
+  }
+
+  .stats-banner {
+    background: linear-gradient(135deg, #1A1A2E 0%, #2D2D54 100%);
+    border-radius: 24px;
+    padding: 48px;
+    color: white;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 32px;
+    position: relative;
+    overflow: hidden;
+  }
+  .stats-banner::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 300px; height: 100%;
+    background: linear-gradient(90deg, transparent 0%, rgba(255,90,54,0.15) 100%);
+  }
+  .stat-item { position: relative; z-index: 2; }
+  .stat-value {
+    font-size: 48px;
+    font-weight: 900;
+    background: linear-gradient(135deg, #FF9876, #FFB800);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    line-height: 1.1;
+    margin-bottom: 8px;
+    letter-spacing: -0.02em;
+  }
+  .stat-label {
+    font-size: 14px;
+    opacity: 0.75;
+    line-height: 1.5;
+  }
+
+  .solution-hero {
+    background: white;
+    border-radius: 28px;
+    padding: 56px;
+    margin-bottom: 56px;
+    border: 1px solid var(--border-light);
+    position: relative;
+  }
+  .solution-hero-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 56px;
+    align-items: center;
+  }
+  .before-after {
+    background: var(--bg-gray);
+    border-radius: 20px;
+    padding: 36px;
+  }
+  .ba-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 0;
+    border-bottom: 1px dashed var(--border-light);
+  }
+  .ba-row:last-child { border-bottom: none; }
+  .ba-label {
+    font-size: 12px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 6px;
+    flex-shrink: 0;
+    min-width: 64px;
+    text-align: center;
+  }
+  .ba-label.before { background: #FFE5E5; color: #D63031; }
+  .ba-label.after { background: #DAF6EC; color: var(--success); }
+  .ba-text { font-size: 15px; flex: 1; }
+  .ba-arrow {
+    text-align: center;
+    padding: 12px 0;
+    font-size: 24px;
+    color: var(--crabs-primary);
+  }
+  .ba-step-count {
+    font-size: 36px;
+    font-weight: 900;
+    line-height: 1;
+    margin-right: 8px;
+  }
+
+  .process-flow {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin: 40px 0;
+    position: relative;
+  }
+  .process-step {
+    background: white;
+    border: 2px solid var(--border-light);
+    border-radius: 18px;
+    padding: 28px 20px;
+    text-align: center;
+    position: relative;
+    transition: all 0.3s;
+  }
+  .process-step:hover {
+    border-color: var(--crabs-primary);
+    transform: translateY(-4px);
+  }
+  .process-step::after {
+    content: '→';
+    position: absolute;
+    right: -22px; top: 50%;
+    transform: translateY(-50%);
+    font-size: 24px;
+    color: var(--crabs-primary);
+    font-weight: bold;
+    z-index: 2;
+  }
+  .process-step:last-child::after { display: none; }
+  .step-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    background: var(--crabs-primary);
+    color: white;
+    font-size: 11px;
+    font-weight: 700;
+    border-radius: 100px;
+    margin-bottom: 12px;
+    letter-spacing: 0.05em;
+  }
+  .step-title {
+    font-size: 17px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .step-desc {
+    font-size: 13px;
+    color: var(--text-mid);
+    line-height: 1.5;
+  }
+
+  .proposal-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+  .proposal-card {
+    background: white;
+    border-radius: 20px;
+    padding: 36px;
+    border: 1px solid var(--border-light);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s;
+  }
+  .proposal-card:hover {
+    box-shadow: 0 24px 48px rgba(20,40,160,0.08);
+    transform: translateY(-4px);
+  }
+  .proposal-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 4px; height: 100%;
+    background: linear-gradient(180deg, var(--crabs-primary), var(--crabs-accent));
+  }
+  .proposal-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+  .proposal-icon {
+    width: 52px; height: 52px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, var(--samsung-blue), var(--samsung-light));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 24px;
+    flex-shrink: 0;
+  }
+  .proposal-tag {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--crabs-primary);
+    letter-spacing: 0.1em;
+    margin-bottom: 4px;
+  }
+  .proposal-card h3 {
+    font-size: 21px;
+    font-weight: 800;
+    line-height: 1.3;
+  }
+  .proposal-card > p {
+    font-size: 14.5px;
+    color: var(--text-mid);
+    margin-bottom: 18px;
+    line-height: 1.65;
+  }
+  .proposal-features {
+    list-style: none;
+    padding: 0;
+  }
+  .proposal-features li {
+    padding: 10px 0 10px 28px;
+    position: relative;
+    font-size: 14px;
+    color: var(--text-dark);
+    border-top: 1px solid var(--border-light);
+    line-height: 1.5;
+  }
+  .proposal-features li::before {
+    content: '✓';
+    position: absolute;
+    left: 0; top: 10px;
+    width: 20px; height: 20px;
+    background: var(--success);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 900;
+  }
+
+  .kpi-section {
+    background: linear-gradient(135deg, #FFF9F5 0%, #FFFDF5 100%);
+  }
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    margin-bottom: 40px;
+  }
+  .kpi-card {
+    background: white;
+    border-radius: 20px;
+    padding: 32px;
+    border: 2px solid transparent;
+    transition: all 0.3s;
+  }
+  .kpi-card:hover {
+    border-color: var(--crabs-primary);
+  }
+  .kpi-rank {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--crabs-primary);
+    letter-spacing: 0.1em;
+    margin-bottom: 8px;
+  }
+  .kpi-name {
+    font-size: 24px;
+    font-weight: 800;
+    margin-bottom: 12px;
+  }
+  .kpi-desc {
+    font-size: 14.5px;
+    color: var(--text-mid);
+    line-height: 1.65;
+    margin-bottom: 16px;
+  }
+  .kpi-metric {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 18px;
+    background: var(--bg-gray);
+    border-radius: 12px;
+  }
+  .kpi-metric-icon { font-size: 20px; }
+  .kpi-metric-text { font-size: 13px; color: var(--text-mid); }
+  .kpi-metric-text strong { color: var(--samsung-blue); }
+
+  .case-study {
+    background: linear-gradient(135deg, var(--samsung-blue) 0%, #2A3FB8 100%);
+    border-radius: 28px;
+    padding: 56px;
+    color: white;
+    position: relative;
+    overflow: hidden;
+  }
+  .case-study::before {
+    content: 'GS RETAIL CASE';
+    position: absolute;
+    top: 32px; right: -40px;
+    transform: rotate(45deg);
+    background: var(--crabs-accent);
+    color: var(--crabs-dark);
+    padding: 6px 60px;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+  }
+  .case-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  .case-tag {
+    padding: 6px 14px;
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(10px);
+    border-radius: 100px;
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .case-title {
+    font-size: 32px;
+    font-weight: 800;
+    line-height: 1.25;
+    margin-bottom: 12px;
+    max-width: 600px;
+  }
+  .case-desc {
+    font-size: 16px;
+    opacity: 0.85;
+    margin-bottom: 36px;
+    max-width: 660px;
+  }
+  .case-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .case-stat {
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 18px;
+    padding: 28px;
+  }
+  .case-stat-num {
+    font-size: 44px;
+    font-weight: 900;
+    background: linear-gradient(135deg, #FFB800, #FF7E39);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  .case-stat-label {
+    font-size: 14px;
+    opacity: 0.85;
+  }
+
+  .timeline-section { background: white; }
+  .timeline {
+    position: relative;
+    padding-left: 0;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 60px;
+    top: 20px;
+    bottom: 20px;
+    width: 3px;
+    background: linear-gradient(180deg, var(--samsung-blue), var(--crabs-primary));
+  }
+  .timeline-item {
+    position: relative;
+    padding-left: 100px;
+    margin-bottom: 32px;
+    min-height: 100px;
+  }
+  .timeline-date {
+    position: absolute;
+    left: 0;
+    width: 120px;
+    text-align: right;
+    padding-right: 36px;
+    padding-top: 4px;
+  }
+  .timeline-month {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-light);
+    letter-spacing: 0.1em;
+    margin-bottom: 2px;
+  }
+  .timeline-day {
+    font-size: 28px;
+    font-weight: 900;
+    color: var(--samsung-blue);
+    line-height: 1;
+  }
+  .timeline-dot {
+    position: absolute;
+    left: 48px;
+    top: 8px;
+    width: 28px;
+    height: 28px;
+    background: white;
+    border: 4px solid var(--crabs-primary);
+    border-radius: 50%;
+    z-index: 2;
+  }
+  .timeline-item.major .timeline-dot {
+    background: var(--crabs-primary);
+    box-shadow: 0 0 0 6px rgba(255,90,54,0.15);
+  }
+  .timeline-content {
+    background: var(--bg-gray);
+    border-radius: 16px;
+    padding: 20px 24px;
+    border-left: 4px solid var(--samsung-blue);
+  }
+  .timeline-item.major .timeline-content {
+    background: linear-gradient(135deg, #FFF5F0, #FFFAF3);
+    border-left-color: var(--crabs-primary);
+  }
+  .timeline-title {
+    font-size: 17px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .timeline-desc {
+    font-size: 14px;
+    color: var(--text-mid);
+    line-height: 1.55;
+  }
+
+  .next-steps-section {
+    background: linear-gradient(135deg, var(--crabs-dark) 0%, #2D2D54 100%);
+    color: white;
+  }
+  .next-steps-section .section-tag {
+    background: rgba(255,255,255,0.1);
+    color: white;
+  }
+  .next-steps-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+  .next-step {
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 20px;
+    padding: 32px;
+  }
+  .next-step-num {
+    display: inline-block;
+    padding: 4px 12px;
+    background: var(--crabs-primary);
+    border-radius: 100px;
+    font-size: 12px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    letter-spacing: 0.05em;
+  }
+  .next-step-owner {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--crabs-accent);
+    letter-spacing: 0.1em;
+    margin-bottom: 8px;
+  }
+  .next-step-title {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    line-height: 1.3;
+  }
+  .next-step-detail {
+    font-size: 14.5px;
+    opacity: 0.8;
+    line-height: 1.65;
+  }
+  .next-step-due {
+    display: inline-block;
+    margin-top: 16px;
+    padding: 6px 14px;
+    background: rgba(255,184,0,0.15);
+    color: var(--crabs-accent);
+    border-radius: 100px;
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  .quote-block {
+    background: white;
+    border-radius: 24px;
+    padding: 48px;
+    margin: 56px 0;
+    border-left: 6px solid var(--crabs-primary);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.04);
+  }
+  .quote-text {
+    font-size: 22px;
+    font-weight: 600;
+    line-height: 1.55;
+    color: var(--text-dark);
+    margin-bottom: 16px;
+    letter-spacing: -0.01em;
+  }
+  .quote-author {
+    font-size: 14px;
+    color: var(--text-light);
+    font-weight: 500;
+  }
+
+  .extension-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-top: 32px;
+  }
+  .extension-card {
+    background: white;
+    border: 2px solid var(--border-light);
+    border-radius: 16px;
+    padding: 24px;
+    text-align: center;
+    transition: all 0.3s;
+  }
+  .extension-card:hover {
+    border-color: var(--samsung-blue);
+    background: #F8FAFF;
+  }
+  .extension-icon {
+    font-size: 32px;
+    margin-bottom: 12px;
+  }
+  .extension-stage {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--samsung-blue);
+    letter-spacing: 0.1em;
+    margin-bottom: 6px;
+  }
+  .extension-name {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .extension-desc {
+    font-size: 12.5px;
+    color: var(--text-mid);
+    line-height: 1.5;
+  }
+
+  footer {
+    background: var(--crabs-dark);
+    color: rgba(255,255,255,0.7);
+    padding: 40px 0;
+    text-align: center;
+    font-size: 13px;
+  }
+  footer strong { color: white; }
+
+  @media (max-width: 960px) {
+    .hero h1 { font-size: 36px; }
+    .section-title { font-size: 28px; }
+    .pain-grid, .proposal-grid, .kpi-grid, .next-steps-grid { grid-template-columns: 1fr; }
+    .stats-banner { grid-template-columns: repeat(2, 1fr); }
+    .process-flow { grid-template-columns: 1fr; }
+    .process-step::after { display: none; }
+    .solution-hero-grid { grid-template-columns: 1fr; }
+    .case-stats { grid-template-columns: 1fr; }
+    .extension-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="container hero-content">
+    <span class="hero-tag">PoC 회의록 시각화 · 2026.05.28</span>
+    <h1>삼성생명 AI 서치를<br>
+      <span class="accent">함께 성공시키는</span><br>
+      크랩스의 PoC 청사진</h1>
+    <p class="hero-subtitle">
+      FC 콘텐츠 제작 생산성과 퀄리티 두 마리 토끼를 모두 잡아내는,<br>
+      GS리테일 PoC에서 검증된 크랩스의 솔루션과 실행 방법론
+    </p>
+    <div class="hero-meta">
+      <div class="meta-item">
+        <div class="meta-label">PoC 기간</div>
+        <div class="meta-value">16주 · 2026.05 ~ 2026.10</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">최종 평가</div>
+        <div class="meta-value">10월 부사장 5인 평가 세션</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">차기 미팅</div>
+        <div class="meta-value">2026.06.09 (화) 14:00</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">참석자</div>
+        <div class="meta-value">크랩스 4인 × 삼성생명 5인</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section>
+  <div class="container">
+    <span class="section-tag">CURRENT PAIN POINTS</span>
+    <h2 class="section-title">삼성생명이 풀어야 할<br>세 가지 결정적 과제</h2>
+    <p class="section-desc">
+      AI 서치 플랫폼 오픈 한 달, 콘텐츠 100여 개 적재 — 그러나 파트 절반이 매달려 만든 결과물입니다.
+      현재 구조에서 확장은 불가능에 가깝습니다.
+    </p>
+
+    <div class="pain-grid">
+      <div class="pain-card">
+        <span class="pain-number">01</span>
+        <div class="pain-icon">⏱️</div>
+        <h3>사람 손에 의존한<br>스크립트 제작 공수</h3>
+        <p>모든 스크립트를 사람이 직접 타이핑. PD 한 명이 1분 콘텐츠 1개 만드는 데 하루~이틀 소요. 2주 16개 = 영업일 기준 하루 2~3개 필수.</p>
+        <div class="pain-quote">"몇 날 며칠 뼈를 갈아가며 만들었어요. 이걸 자동화할 수 있으면 너무 좋을 것 같아요." — 삼성생명 프로 2</div>
+      </div>
+      <div class="pain-card">
+        <span class="pain-number">02</span>
+        <div class="pain-icon">⚖️</div>
+        <h3>컴플라이언스 vs 재미<br>아슬아슬한 줄다리기</h3>
+        <p>보험 상품 콘텐츠는 잘못된 정보 하나에 플랫폼 신뢰도가 무너짐. 동시에 FC가 다시 들어오게 하려면 재미가 필수. 두 가치의 균형이 최대 난제.</p>
+        <div class="pain-quote">"하나라도 잘못된 정보가 있으면… AI가 검수까지 해 주면 좋겠어요." — 삼성생명 프로 2</div>
+      </div>
+      <div class="pain-card">
+        <span class="pain-number">03</span>
+        <div class="pain-icon">📚</div>
+        <h3>다양한 인풋 데이터를<br>처리하는 복잡도</h3>
+        <p>약관·상품설명서·교육자료·FC 설문·라이브TV 원고… 인풋 형태가 천차만별. 특히 표 안에 표가 있는 약관 구조 처리는 기존 솔루션이 손도 못 댐.</p>
+        <div class="pain-quote">"인풋의 틀이 너무 다양할 거라서… 매번 달라지는데." — 삼성생명 프로 3</div>
+      </div>
+    </div>
+
+    <div class="stats-banner">
+      <div class="stat-item">
+        <div class="stat-value">2주 16개</div>
+        <div class="stat-label">현재 콘텐츠 업로드 주기<br>하루 2~3개 강제 생산</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value">하루~이틀</div>
+        <div class="stat-label">PD 1인 기준<br>1분 콘텐츠 1개 제작 소요</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value">파트의 1/2</div>
+        <div class="stat-label">콘텐츠 제작에 투입된<br>전체 파트원 비율</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value">100+</div>
+        <div class="stat-label">한 달간 사람 손으로<br>만들어 올린 콘텐츠 수</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="background: white;">
+  <div class="container">
+    <span class="section-tag crabs">CRABS CORE PROPOSAL</span>
+    <h2 class="section-title">크랩스의 핵심 제안:<br>19단계를 4단계로 줄였습니다</h2>
+    <p class="section-desc">
+      GS리테일 PoC에서 입증한 단계 단축 방법론을 삼성생명 AI 서치에 그대로 이식합니다.
+      "복잡한 워크플로우" 자체를 솔루션으로 흡수합니다.
+    </p>
+
+    <div class="solution-hero">
+      <div class="solution-hero-grid">
+        <div>
+          <div style="font-size: 14px; font-weight: 700; color: var(--crabs-primary); letter-spacing: 0.1em; margin-bottom: 12px;">GS리테일 적용 검증 사례</div>
+          <h3 style="font-size: 28px; font-weight: 800; line-height: 1.25; margin-bottom: 16px;">"제작 단계 자체를 압축해 드립니다"</h3>
+          <p style="font-size: 16px; color: var(--text-mid); line-height: 1.7; margin-bottom: 24px;">
+            GS샵 PD들은 영상 1개 만들 때 이미지 캡처 30분 → 스크립트 30분 → 음성·영상·편집을 오가며 19단계를 반복했습니다.
+            크랩스는 이 흐름을 단 4단계로 흡수하고, 시행착오의 단계 자체를 제거했습니다.
+          </p>
+          <div style="display: flex; gap: 24px; align-items: baseline;">
+            <div>
+              <div class="ba-step-count" style="color: #D63031;">19</div>
+              <div style="font-size: 12px; color: var(--text-light);">기존 단계</div>
+            </div>
+            <div style="font-size: 28px; color: var(--crabs-primary);">→</div>
+            <div>
+              <div class="ba-step-count" style="color: var(--success);">4</div>
+              <div style="font-size: 12px; color: var(--text-light);">크랩스 적용 후</div>
+            </div>
+          </div>
+        </div>
+        <div class="before-after">
+          <div class="ba-row">
+            <div class="ba-label before">기존</div>
+            <div class="ba-text">상세 페이지에서 30분간 의미 단위 이미지 캡처</div>
+          </div>
+          <div class="ba-row">
+            <div class="ba-label before">기존</div>
+            <div class="ba-text">머릿속 아이데이션과 GPT 왕복으로 스크립트 30분</div>
+          </div>
+          <div class="ba-row">
+            <div class="ba-label before">기존</div>
+            <div class="ba-text">타입캐스트·생성형 영상 한 땀 한 땀 4~5시간</div>
+          </div>
+          <div class="ba-arrow">▼</div>
+          <div class="ba-row">
+            <div class="ba-label after">크랩스</div>
+            <div class="ba-text">URL/소스 1회 입력만으로 의미 단위 자동 추출</div>
+          </div>
+          <div class="ba-row">
+            <div class="ba-label after">크랩스</div>
+            <div class="ba-text">분석 리포트 + 콘셉트 카드 선택 → 클릭 한 번</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h3 style="font-size: 26px; font-weight: 800; margin-bottom: 32px; text-align: center;">크랩스가 구축할 통합 워크플로우</h3>
+    <div class="process-flow">
+      <div class="process-step">
+        <div class="step-badge">STEP 1</div>
+        <div class="step-title">제품 정보 입력</div>
+        <div class="step-desc">약관·교육자료·라이브TV 원고·설문 등 다양한 인풋 처리</div>
+      </div>
+      <div class="process-step">
+        <div class="step-badge">STEP 2</div>
+        <div class="step-title">AI 자동 분석</div>
+        <div class="step-desc">제품 소구점·언론 반응·고객 리뷰까지 종합 분석 리포트</div>
+      </div>
+      <div class="process-step">
+        <div class="step-badge">STEP 3</div>
+        <div class="step-title">컨셉 선택</div>
+        <div class="step-desc">쇼케이스/캐릭터/후킹 강화/안전성/계절 반영 옵션 제공</div>
+      </div>
+      <div class="process-step">
+        <div class="step-badge">STEP 4</div>
+        <div class="step-title">영상 제작·편집</div>
+        <div class="step-desc">멀티 레퍼런스 9장 입력 → 생성 → 즉시 에디터 수정</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <span class="section-tag crabs">7 STRATEGIC PROPOSALS</span>
+    <h2 class="section-title">PoC 성공을 위한<br>크랩스의 7가지 구체적 제안</h2>
+    <p class="section-desc">단순한 제작 자동화가 아니라, 삼성생명 AI 서치 플랫폼 자체의 체질을 바꾸는 단계별 솔루션입니다.</p>
+
+    <div class="proposal-grid">
+
+      <div class="proposal-card">
+        <div class="proposal-header">
+          <div class="proposal-icon">📊</div>
+          <div>
+            <div class="proposal-tag">PROPOSAL 01</div>
+            <h3>다양한 인풋 대응<br>모드별 커스터마이징</h3>
+          </div>
+        </div>
+        <p>입력되는 정보의 성격에 따라 분석 보드를 완전히 달리합니다. 약관·교육자료·뉴스·상점 정보 등 각 모드별 최적 분석 로직을 N개 분리 제공.</p>
+        <ul class="proposal-features">
+          <li>약관 모드: 표 안의 표 구조까지 의미 단위 추출</li>
+          <li>뉴스 분석 모드: 인물·사건·트렌드 3축 분석</li>
+          <li>교육자료 모드: 핵심 화법·니즈 환기 키워드 자동 추출</li>
+          <li>키워드 단위가 아닌 문맥 단위 추출 기술 적용</li>
+        </ul>
+      </div>
+
+      <div class="proposal-card">
+        <div class="proposal-header">
+          <div class="proposal-icon">🎬</div>
+          <div>
+            <div class="proposal-tag">PROPOSAL 02</div>
+            <h3>자막·음성·영상<br>3중 오버레이 퀄리티</h3>
+          </div>
+        </div>
+        <p>최종 발표회에서 부사장님들이 지적했던 "입이 너무 안 맞아" 이슈를 원천 차단. GS에서 이미 적용한 검증된 기술입니다.</p>
+        <ul class="proposal-features">
+          <li>음성 어색함 발생 시 자동 오버레이 처리</li>
+          <li>자막 깨짐·오타 깨짐 현상 자동 검수</li>
+          <li>립싱크 정밀도 보장으로 최종 시연 안정성 확보</li>
+          <li>화면-음성 딜레이 이슈 대응 가이드 제공</li>
+        </ul>
+      </div>
+
+      <div class="proposal-card">
+        <div class="proposal-header">
+          <div class="proposal-icon">🛡️</div>
+          <div>
+            <div class="proposal-tag">PROPOSAL 03</div>
+            <h3>컴플라이언스 자동<br>검증 모듈 추가</h3>
+          </div>
+        </div>
+        <p>"업계 최대" 같은 과장 표현, 금지 조항 위배 여부를 AI가 자체 판별. 보험 콘텐츠 신뢰도를 잃지 않으면서 재미를 살리는 균형점 확보.</p>
+        <ul class="proposal-features">
+          <li>삼성생명 내부 컴플라이언스 규정 학습 적용</li>
+          <li>걸린 항목과 근거 조항을 함께 제시</li>
+          <li>인포그래픽 오류·디자인 패턴 깨짐도 자동 검수</li>
+          <li>장기적으로 고객 배포 가능 콘텐츠 자동 판별</li>
+        </ul>
+      </div>
+
+      <div class="proposal-card">
+        <div class="proposal-header">
+          <div class="proposal-icon">✂️</div>
+          <div>
+            <div class="proposal-tag">PROPOSAL 04</div>
+            <h3>롱폼 → 숏폼<br>하이라이트 자동 추출</h3>
+          </div>
+        </div>
+        <p>스마트 속속에 쌓여있는 과거 상품 강의·EBS 특강 등 1시간짜리 영상을 5분 요약으로 자동 변환. JTBC·KBO·월드컵에 납품 중인 메인 서비스.</p>
+        <ul class="proposal-features">
+          <li>영상 전체를 텍스트 인덱싱 후 핵심 장면 추출</li>
+          <li>채팅으로 "미국 금리 부분 찾아줘" 식 장면 검색</li>
+          <li>자체 비디오 에디터 + 리플 컷 편집 자동화</li>
+          <li>5분 영상도 3분 안에 검수형 컷 편집 가능</li>
+        </ul>
+      </div>
+
+      <div class="proposal-card">
+        <div class="proposal-header">
+          <div class="proposal-icon">⚡</div>
+          <div>
+            <div class="proposal-tag">PROPOSAL 05</div>
+            <h3>큐 기반 자동화<br>병렬 생성 시스템</h3>
+          </div>
+        </div>
+        <p>"신경 안 쓰시고 일하다가 보시면 완성돼 있는" 구조. 1분 영상 = 베오 8초 × 8개 연장. 일일이 클릭 없이 큐가 차곡차곡 처리됩니다.</p>
+        <ul class="proposal-features">
+          <li>영상 1개당 15~20분 생성 시간 자동 대기열 처리</li>
+          <li>병렬 처리로 다수 콘텐츠 동시 생성 가능</li>
+          <li>앞부분 뉘앙스 이어짐 보장 / 일괄 생성 선택 옵션</li>
+          <li>실패율 높은 클로바 의존도 해소</li>
+        </ul>
+      </div>
+
+      <div class="proposal-card">
+        <div class="proposal-header">
+          <div class="proposal-icon">🔐</div>
+          <div>
+            <div class="proposal-tag">PROPOSAL 06</div>
+            <h3>망분리 환경 대응<br>유연한 납품 형태</h3>
+          </div>
+        </div>
+        <p>삼성생명 내부 보안 환경을 그대로 존중. 외부 PC에서 작업 후 결과물만 들여오는 현재 운영 흐름을 깨지 않습니다.</p>
+        <ul class="proposal-features">
+          <li>기본: 인터넷 서비스 형태 제공</li>
+          <li>고스펙 요구 시: 별도 애플리케이션 컴퓨터 제공</li>
+          <li>CDN 외부 스트리밍 서비스 옵션 가능</li>
+          <li>스크린 어려운 자료는 인쇄·사진 업로드도 지원</li>
+        </ul>
+      </div>
+
+      <div class="proposal-card" style="grid-column: span 2;">
+        <div class="proposal-header">
+          <div class="proposal-icon">🤝</div>
+          <div>
+            <div class="proposal-tag">PROPOSAL 07</div>
+            <h3>"같이 만들면서" 협업하는 운영 방식 — GS PoC 성공 공식 그대로</h3>
+          </div>
+        </div>
+        <p>크랩스의 차별점은 솔루션을 던지고 끝나지 않는다는 것. 매주 정기 회의 + 품평회로 함께 만들어보며 메뉴·플로우·콘셉트를 같이 진화시킵니다. 삼성생명 파트 내부에서 만들고 있는 다음 주 신규 콘텐츠 1편부터 즉시 동시 제작에 들어갑니다.</p>
+        <ul class="proposal-features">
+          <li>다음 주 콘텐츠 5편 + 인물·시나리오·기존 프롬프트 이력 공유 → 양사 동시 제작 시작</li>
+          <li>"매뉴얼 만들 듯" 매뉴얼화 → 구축 전에 흐름과 프롬프트를 함께 설계</li>
+          <li>품평회 방식 — "이거 위주로 뽑네" → 리버스 엔지니어링으로 회사 톤 학습</li>
+          <li>아웃풋 틀 고정 금지 — 크랩스는 오픈 마인드로 제안, 삼성은 "선 넘으면" 피드백</li>
+          <li>샘플 영상·기존 제작 프롬프트 → 학습 소스 확보 → 향후 확장 기반 마련</li>
+          <li>인풋 결정 → 아웃풋 결정 → 중간 단계는 함께 맞춰가는 단계적 빌드</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section style="background: white;">
+  <div class="container">
+    <div class="case-study">
+      <div class="case-header">
+        <span class="case-tag">✓ 검증된 성공 사례</span>
+        <span class="case-tag">동일 방법론 적용</span>
+      </div>
+      <h2 class="case-title">GS리테일에서 우리가 만들어낸<br>"불가능한 KPI"의 결과</h2>
+      <p class="case-desc">
+        GS는 PoC 시작 시 "영상으로 구매까지 유도? 말도 안 된다"라는 반응이 지배적이었습니다.
+        크랩스는 통제할 수 없는 영역까지 도전했고, 결과는 이렇게 나왔습니다.
+      </p>
+      <div class="case-stats">
+        <div class="case-stat">
+          <div class="case-stat-num">+50%</div>
+          <div class="case-stat-label">영상 노출 후 판매율 상승</div>
+        </div>
+        <div class="case-stat">
+          <div class="case-stat-num">×4배</div>
+          <div class="case-stat-label">콘텐츠 제작량 (사람 대비)</div>
+        </div>
+        <div class="case-stat">
+          <div class="case-stat-num">19→4</div>
+          <div class="case-stat-label">제작 단계 압축 (한 화면 내 통합)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="quote-block">
+      <p class="quote-text">"GS는 사실 그 회사 브랜드 기준이 있어요. 자기네들 잘 팔리는 영상 기준 정해 주시면 그 기준에 따라 만들고, 거기서 주요 장면을 찾아내가지고… 삼성생명도 똑같이 됩니다."</p>
+      <p class="quote-author">— 김태영 대표 (크랩스)</p>
+    </div>
+  </div>
+</section>
+
+<section class="kpi-section">
+  <div class="container">
+    <span class="section-tag crabs">AGREED KPI</span>
+    <h2 class="section-title">10월 평가 세션을 향한<br>합의된 핵심 KPI</h2>
+    <p class="section-desc">
+      회의에서 양사가 합의한 KPI는 두 가지 축으로 정리됐습니다.
+      현업 부서의 KPI(체류 시간)와 얼라인하여 평가 점수를 극대화합니다.
+    </p>
+
+    <div class="kpi-grid">
+      <div class="kpi-card">
+        <div class="kpi-rank">PRIMARY KPI · 정량</div>
+        <div class="kpi-name">📈 콘텐츠 생산성</div>
+        <div class="kpi-desc">사람의 공수를 줄이면서 콘텐츠 제작 개수와 다양성 확장. GS 사례에서 입증된 4배 증가율을 삼성생명에 적용.</div>
+        <div class="kpi-metric">
+          <span class="kpi-metric-icon">📊</span>
+          <span class="kpi-metric-text"><strong>Before:</strong> 2주 16개 · 하루 2~3개 한계 → <strong>After:</strong> 일일 생산량 3~4배 증가 목표</span>
+        </div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-rank">PRIMARY KPI · 정성</div>
+        <div class="kpi-name">⏰ FC 체류 시간</div>
+        <div class="kpi-desc">AI 서치팀 자체 KPI와 얼라인. 콘텐츠 개수·장르 다양성·양질의 콘텐츠 모두가 결국 리텐션 하나로 수렴.</div>
+        <div class="kpi-metric">
+          <span class="kpi-metric-icon">🎯</span>
+          <span class="kpi-metric-text"><strong>측정:</strong> 평균 콘텐츠 뷰 · 체류 시간 · DAU/MAU 듀레이션</span>
+        </div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-rank">SECONDARY · 추적 가능 시</div>
+        <div class="kpi-name">👆 클릭률 (CTR)</div>
+        <div class="kpi-desc">"보기 시작했다"는 양적 신호. 후킹 강화 옵션으로 첫 3초 시선 자극 효과 검증.</div>
+        <div class="kpi-metric">
+          <span class="kpi-metric-icon">🔥</span>
+          <span class="kpi-metric-text"><strong>전략:</strong> 강한 문제 제기 / 강한 긍정 후킹 A/B 옵션 제공</span>
+        </div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-rank">SECONDARY · 입소문</div>
+        <div class="kpi-name">💬 구상품 커버리지</div>
+        <div class="kpi-desc">"AI 서치 가니까 엄청 쉽게 설명해 놨던데" 입소문 유발. 현재 안 건드린 구상품 영역 커버로 FC 유입 창구 확장.</div>
+        <div class="kpi-metric">
+          <span class="kpi-metric-icon">🗣️</span>
+          <span class="kpi-metric-text"><strong>효과:</strong> 고정 배너 외 자발적 유입 채널 형성</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="background: white;">
+  <div class="container">
+    <span class="section-tag">EXPANSION VISION</span>
+    <h2 class="section-title">PoC 너머의 확장 시나리오</h2>
+    <p class="section-desc">
+      삼성생명 프로 1의 핵심 코멘트: "확장성이 있다고 판단되어야 점수가 좋을 것 같아요."
+      크랩스는 PoC 단계에서 FC 콘텐츠에 집중하되, 확장 가능성을 평가 세션에서 입증할 준비를 합니다.
+    </p>
+
+    <div class="extension-grid">
+      <div class="extension-card">
+        <div class="extension-icon">🎯</div>
+        <div class="extension-stage">PoC PRIMARY</div>
+        <div class="extension-name">FC 콘텐츠</div>
+        <div class="extension-desc">AI 서치 플랫폼 내 쇼츠·팟캐스트 통합 제작</div>
+      </div>
+      <div class="extension-card">
+        <div class="extension-icon">🛍️</div>
+        <div class="extension-stage">EXTENSION 1</div>
+        <div class="extension-name">삼성생명 다이렉트</div>
+        <div class="extension-desc">B2C 비대면 채널용 콘텐츠 — 타 보험사 사례 보유</div>
+      </div>
+      <div class="extension-card">
+        <div class="extension-icon">💼</div>
+        <div class="extension-stage">EXTENSION 2</div>
+        <div class="extension-name">퇴직연금 콘텐츠</div>
+        <div class="extension-desc">더엘스·연금 채널 등 판매 채널 다양화</div>
+      </div>
+      <div class="extension-card">
+        <div class="extension-icon">📣</div>
+        <div class="extension-stage">EXTENSION 3</div>
+        <div class="extension-name">브랜드 광고</div>
+        <div class="extension-desc">기획실 커뮤니케이션팀과 연계 가능</div>
+      </div>
+    </div>
+
+    <div class="quote-block" style="margin-top: 56px;">
+      <p class="quote-text">"FC 콘텐츠 좋아, 근데 거기서 끝이야? 라는 질문이 나올 수도 있겠다. 결국 고객한테도 소구점이 있으면 좋겠다는 생각이 들고… 확장 측면에서 점수가 좋을 것 같아요."</p>
+      <p class="quote-author">— 삼성생명 프로 1 (신사업 추진 파트)</p>
+    </div>
+  </div>
+</section>
+
+<section class="timeline-section">
+  <div class="container">
+    <span class="section-tag">PoC ROADMAP</span>
+    <h2 class="section-title">크랩스가 그리는<br>PoC 16주 로드맵</h2>
+    <p class="section-desc">평가 세션 점수를 끌어올리기 위한, 양사 합의된 일정과 마일스톤입니다.</p>
+
+    <div class="timeline">
+      <div class="timeline-item major">
+        <div class="timeline-date">
+          <div class="timeline-month">JUN 2026</div>
+          <div class="timeline-day">09</div>
+        </div>
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          <div class="timeline-title">차기 정기 미팅 · 오후 2시</div>
+          <div class="timeline-desc">PoC 운영 계획서(크랩스 작성, 6/8 월요일 사전 송부) 검토 + 첫 콘텐츠 동시 제작 시작</div>
+        </div>
+      </div>
+      <div class="timeline-item major">
+        <div class="timeline-date">
+          <div class="timeline-month">JUN 2026</div>
+          <div class="timeline-day">12</div>
+        </div>
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          <div class="timeline-title">PoC 계획서 최종 제출 마감</div>
+          <div class="timeline-desc">KPI · 기대 효과 · 일정 포함하여 삼성생명 신사업 추진 파트로 제출</div>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">
+          <div class="timeline-month">JUN 2026</div>
+          <div class="timeline-day">~말</div>
+        </div>
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          <div class="timeline-title">방향성 수립 집중 기간</div>
+          <div class="timeline-desc">초반 매주 미팅. 인풋(약관·교육자료)·아웃풋(콘텐츠 스타일) 결정 후 중간 단계 함께 설계</div>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">
+          <div class="timeline-month">JUL-AUG</div>
+          <div class="timeline-day">02</div>
+        </div>
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          <div class="timeline-title">MVP 구축 + 함께 만들기 단계</div>
+          <div class="timeline-desc">크랩스 솔루션을 빨리 한 번 구축 → 써보며 "이거 바꿔주세요" 피드백 반복 → 양사 품평회</div>
+        </div>
+      </div>
+      <div class="timeline-item major">
+        <div class="timeline-date">
+          <div class="timeline-month">AUG 2026</div>
+          <div class="timeline-day">중</div>
+        </div>
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          <div class="timeline-title">진행 경과 공유회 (기획팀장 주관)</div>
+          <div class="timeline-desc">5개 스타트업 PoC 상무님들 모셔 현황 체크 — 작년 무이슈 통과 케이스 참고. 이슈 없을 시 생략 가능</div>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">
+          <div class="timeline-month">SEP 2026</div>
+          <div class="timeline-day">~</div>
+        </div>
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          <div class="timeline-title">고도화 + 확장 시나리오 준비</div>
+          <div class="timeline-desc">FC 콘텐츠 안정화 + 다이렉트·퇴직연금·브랜드 확장 가능성 검증 자료 동시 준비</div>
+        </div>
+      </div>
+      <div class="timeline-item major">
+        <div class="timeline-date">
+          <div class="timeline-month">OCT 2026</div>
+          <div class="timeline-day">02</div>
+        </div>
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          <div class="timeline-title">PoC 공식 종료</div>
+          <div class="timeline-desc">16주 PoC 일정 마감. 필요 시 연장 가능하나 일단 1차 마감 목표</div>
+        </div>
+      </div>
+      <div class="timeline-item major">
+        <div class="timeline-date">
+          <div class="timeline-month">OCT 2026</div>
+          <div class="timeline-day">중</div>
+        </div>
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          <div class="timeline-title">⭐ 최우수상 평가 세션</div>
+          <div class="timeline-desc">삼성생명 부사장 5인 평가. 스타트업 20분 발표(PoC 배경·결과·향후 협업 제안) + 현업 상무 5분 발표(활용 포인트·이슈)</div>
+        </div>
+      </div>
+      <div class="timeline-item major">
+        <div class="timeline-date">
+          <div class="timeline-month">OCT 2026</div>
+          <div class="timeline-day">말</div>
+        </div>
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          <div class="timeline-title">🏆 최종 발표회 & 시상식 (삼성증권 CEO 주관)</div>
+          <div class="timeline-desc">17개사 5분 데모데이 피칭 · 200명 규모 · 외부 VC 초청. 최우수상 1천만 원 + CES 부스 동행</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="next-steps-section">
+  <div class="container">
+    <span class="section-tag">IMMEDIATE NEXT ACTIONS</span>
+    <h2 class="section-title" style="color: white;">다음 미팅(6/9) 전까지<br>양사가 해야 할 일</h2>
+    <p class="section-desc" style="color: rgba(255,255,255,0.75); margin-bottom: 56px;">
+      "하나 만들어 보면서 매뉴얼을 만들어 봐요" — 김태영 대표<br>
+      6/9 미팅 전까지 양사가 분담한 구체적 액션입니다.
+    </p>
+
+    <div class="next-steps-grid">
+
+      <div class="next-step">
+        <span class="next-step-num">ACTION 01</span>
+        <div class="next-step-owner">CRABS · 크랩스</div>
+        <h3 class="next-step-title">PoC 운영 계획서 작성</h3>
+        <p class="next-step-detail">KPI(생산성·체류시간), 기대 효과, 16주 단계별 일정, 인풋/아웃풋 정의를 담은 운영 계획서 작성하여 사전 송부</p>
+        <span class="next-step-due">📅 ~6월 8일(월) 송부</span>
+      </div>
+
+      <div class="next-step">
+        <span class="next-step-num">ACTION 02</span>
+        <div class="next-step-owner">SAMSUNG · 삼성생명</div>
+        <h3 class="next-step-title">다음 주 제작 콘텐츠 5편 + 인물·시나리오 공유</h3>
+        <p class="next-step-detail">파트가 다음 주 올려야 할 신규 콘텐츠(주인공 완성) 5편 시나리오 + 기존 만든 쇼츠 대표작 + 사용했던 프롬프트 이력</p>
+        <span class="next-step-due">📅 ~6월 9일(화) 미팅 전</span>
+      </div>
+
+      <div class="next-step">
+        <span class="next-step-num">ACTION 03</span>
+        <div class="next-step-owner">SAMSUNG · 삼성생명</div>
+        <h3 class="next-step-title">소스 자료 일부 전달</h3>
+        <p class="next-step-detail">약관·교육자료·상품설명서 등 인풋 소스 일부 공유 (제일 먼저 만들었으면 좋겠다 싶은 콘텐츠의 인풋 우선)</p>
+        <span class="next-step-due">📅 6월 초~중순</span>
+      </div>
+
+      <div class="next-step">
+        <span class="next-step-num">ACTION 04</span>
+        <div class="next-step-owner">CRABS · 크랩스</div>
+        <h3 class="next-step-title">웹사이트 직접 생성 권한 / 외부 페이지 공유</h3>
+        <p class="next-step-detail">삼성생명 측이 크랩스 생성 웹사이트에 직접 접속해 결과 확인 → 피드백 → 함께 만들기 환경 구축</p>
+        <span class="next-step-due">📅 6월 초</span>
+      </div>
+
+      <div class="next-step" style="grid-column: span 2;">
+        <span class="next-step-num">ACTION 05 · 양사 공동</span>
+        <div class="next-step-owner">JOINT · 6월 9일 미팅 안건</div>
+        <h3 class="next-step-title">동일 콘텐츠 1편을 양사가 동시 제작 → 6/9 미팅에서 상호 시연 + 품평회</h3>
+        <p class="next-step-detail">삼성생명이 다음 주 만들 예정인 콘텐츠를 인풋으로, 크랩스도 동일 인풋으로 자체 솔루션으로 영상 제작. 6/9 미팅에서 두 결과물을 같이 보며 "이렇게 만들 수 있구나" 학습 + 콘셉트/플로우/프롬프트 동시 진화. GS PoC에서 입증된 "매주 정기 회의 + 품평회" 운영 방식 그대로 적용.</p>
+        <span class="next-step-due">📅 6월 9일(화) 오후 2시</span>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section style="background: white;">
+  <div class="container" style="max-width: 920px;">
+    <div style="text-align: center; padding: 40px 0;">
+      <div style="font-size: 13px; font-weight: 700; color: var(--crabs-primary); letter-spacing: 0.15em; margin-bottom: 20px;">CRABS ⨯ SAMSUNG LIFE INSURANCE</div>
+      <h2 style="font-size: 36px; font-weight: 800; line-height: 1.3; margin-bottom: 24px; letter-spacing: -0.02em;">
+        "업무는 줄어들고,<br>일은 더 하게 만들어 드립니다"
+      </h2>
+      <p style="font-size: 17px; color: var(--text-mid); line-height: 1.75; max-width: 720px; margin: 0 auto 32px;">
+        GS리테일 경영진이 우리에게 했던 말이 곧 크랩스의 약속입니다.<br>
+        AI 서치 파트의 다섯 분 중 콘텐츠 제작에서 자유로워진 네 분이<br>
+        인플루언서 컨택·유튜브 확장·신규 채널로 영역을 넓혀가도록 돕는 것 —<br>
+        그것이 크랩스가 정의한 PoC 성공의 본질입니다.
+      </p>
+      <div style="display: inline-flex; gap: 12px; padding: 16px 28px; background: linear-gradient(135deg, var(--samsung-blue), var(--crabs-primary)); color: white; border-radius: 100px; font-size: 15px; font-weight: 700;">
+        <span>다음 미팅</span>
+        <span style="opacity: 0.6;">|</span>
+        <span>2026년 6월 9일 (화) 14:00 · 삼성생명 본사</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <p><strong>크랩스 (CRABS)</strong> × <strong>삼성생명 신사업 추진 파트</strong> · PoC 회의록 시각화 자료</p>
+    <p style="margin-top: 8px;">회의일: 2026년 5월 28일 (목) 20:41 / 104분 39초 · 작성일: 2026년 5월 28일</p>
+    <p style="margin-top: 8px; opacity: 0.5;">참석자 (크랩스): 김태영 대표 · 이종권 · 정세호 · 김민준 / 참석자 (삼성생명): 신사업 파트 + AI 서치 파트 5인</p>
+  </div>
+</footer>
+
+</body>
+</html>
