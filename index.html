@@ -1,8 +1,10 @@
-<html lang="ko"><head>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>삼성생명 × 크랩스 PoC 제안 시각화 | 2026.05.28 회의록</title>
-<link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
   :root {
     --samsung-blue: #1428A0;
@@ -178,17 +180,6 @@
     font-size: 14.5px;
     color: var(--text-mid);
     line-height: 1.65;
-  }
-  .pain-quote {
-    margin-top: 16px;
-    padding: 12px 14px;
-    background: var(--bg-gray);
-    border-left: 3px solid var(--crabs-primary);
-    border-radius: 8px;
-    font-size: 13px;
-    color: var(--text-mid);
-    font-style: italic;
-    line-height: 1.55;
   }
 
   .stats-banner {
@@ -424,7 +415,7 @@
   }
   .kpi-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 24px;
     margin-bottom: 40px;
   }
@@ -477,7 +468,7 @@
     overflow: hidden;
   }
   .case-study::before {
-    content: 'GS RETAIL CASE';
+    content: 'PROVEN CASE';
     position: absolute;
     top: 32px; right: -40px;
     transform: rotate(45deg);
@@ -550,7 +541,7 @@
   .timeline::before {
     content: '';
     position: absolute;
-    left: 60px;
+    left: 140px;
     top: 20px;
     bottom: 20px;
     width: 3px;
@@ -558,16 +549,16 @@
   }
   .timeline-item {
     position: relative;
-    padding-left: 100px;
+    padding-left: 184px;
     margin-bottom: 32px;
     min-height: 100px;
   }
   .timeline-date {
     position: absolute;
     left: 0;
-    width: 120px;
+    width: 116px;
     text-align: right;
-    padding-right: 36px;
+    padding-right: 12px;
     padding-top: 4px;
   }
   .timeline-month {
@@ -585,7 +576,7 @@
   }
   .timeline-dot {
     position: absolute;
-    left: 48px;
+    left: 127px;
     top: 8px;
     width: 28px;
     height: 28px;
@@ -752,475 +743,22 @@
   @media (max-width: 960px) {
     .hero h1 { font-size: 36px; }
     .section-title { font-size: 28px; }
-    .pain-grid, .proposal-grid, .kpi-grid, .next-steps-grid { grid-template-columns: 1fr; }
+    .pain-grid, .proposal-grid, .next-steps-grid { grid-template-columns: 1fr; }
+    .kpi-grid { grid-template-columns: 1fr; }
     .stats-banner { grid-template-columns: repeat(2, 1fr); }
     .process-flow { grid-template-columns: 1fr; }
     .process-step::after { display: none; }
     .solution-hero-grid { grid-template-columns: 1fr; }
     .case-stats { grid-template-columns: 1fr; }
     .extension-grid { grid-template-columns: repeat(2, 1fr); }
+    .timeline::before { left: 100px; }
+    .timeline-item { padding-left: 144px; }
+    .timeline-date { width: 86px; }
+    .timeline-dot { left: 87px; }
   }
 </style>
-<style>
-body { caret-color: auto; }
-span.htmr-comment {
-  background: rgba(255, 220, 60, 0.45);
-  border-bottom: 2px solid rgba(220, 170, 0, 0.7);
-  cursor: help;
-  position: relative;
-}
-span.htmr-comment[data-htmr-text]:hover::after {
-  content: attr(data-htmr-text);
-  position: absolute;
-  left: 0;
-  top: 100%;
-  transform: translateY(6px);
-  background: #1a1a1a;
-  color: #fff;
-  padding: 6px 10px;
-  font-size: 12px;
-  line-height: 1.4;
-  border-radius: 4px;
-  white-space: pre-wrap;
-  max-width: 320px;
-  z-index: 9999;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-}
-span.htmr-comment-flash { animation: htmrFlash 1.2s ease; }
-@keyframes htmrFlash {
-  0%   { background: rgba(255, 220, 60, 0.45); }
-  30%  { background: rgba(255, 140, 0, 0.8); }
-  100% { background: rgba(255, 220, 60, 0.45); }
-}
-span.htmr-mention { color: #2d6cdf; font-weight: 600; }
-/* D11 영역 메모 (드래그 풍선) */
-#htmr-annotate-overlay {
-  position: fixed; inset: 0;
-  pointer-events: none;
-  z-index: 9998;
-}
-body.htmr-annotating #htmr-annotate-overlay { pointer-events: auto; cursor: crosshair; }
-body.htmr-annotating { user-select: none; }
-#htmr-annotate-overlay svg { width: 100%; height: 100%; }
-.htmr-annotate-rect {
-  fill: rgba(255,180,84,0.15);
-  stroke: #ffb454;
-  stroke-width: 2;
-  stroke-dasharray: 6 4;
-  pointer-events: auto;
-  cursor: help;
-}
-.htmr-annotate-rect:hover { fill: rgba(255,180,84,0.3); }
-.htmr-annotate-tooltip {
-  position: fixed;
-  background: #1a1a1a;
-  color: #fff;
-  padding: 8px 12px;
-  border-radius: 6px;
-  font-size: 12px;
-  max-width: 320px;
-  z-index: 10000;
-  pointer-events: none;
-  white-space: pre-wrap;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-}
-.htmr-annotate-banner {
-  position: fixed; top: 10px; left: 50%;
-  transform: translateX(-50%);
-  background: #ffb454; color: #1a1a1a;
-  padding: 6px 14px; border-radius: 20px;
-  font-size: 12px; font-weight: 600;
-  z-index: 10001; box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-  pointer-events: none;
-}
-</style><script>
-(function() {
-  function flush() {
-    window.webkit.messageHandlers.htmrBridge.postMessage({
-      type: 'changed',
-      html: document.documentElement.outerHTML
-    });
-  }
-  window.__htmrFlush = flush;
-
-  function readComments() {
-    var el = document.getElementById('htmr-comments');
-    if (!el) return [];
-    try { return JSON.parse(el.textContent || '[]'); } catch(e) { return []; }
-  }
-  function writeComments(arr) {
-    var el = document.getElementById('htmr-comments');
-    if (!el) {
-      el = document.createElement('script');
-      el.type = 'application/json';
-      el.id = 'htmr-comments';
-      document.head.appendChild(el);
-    }
-    el.textContent = JSON.stringify(arr, null, 2);
-  }
-
-  function uuid() {
-    return 'c-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 9);
-  }
-
-  window.__htmrAddComment = function() {
-    var sel = window.getSelection();
-    if (!sel || sel.isCollapsed || sel.rangeCount === 0) return;
-    var range = sel.getRangeAt(0);
-    var quote = sel.toString();
-    var id = uuid();
-    var span = document.createElement('span');
-    span.className = 'htmr-comment';
-    span.setAttribute('data-htmr-id', id);
-    span.setAttribute('data-htmr-text', '(메모 입력 중…)');
-    try { range.surroundContents(span); }
-    catch(e) {
-      var frag = range.extractContents();
-      span.appendChild(frag);
-      range.insertNode(span);
-    }
-    sel.removeAllRanges();
-    window.webkit.messageHandlers.htmrBridge.postMessage({
-      type: 'requestCommentText', id: id, quote: quote
-    });
-  };
-
-  window.__htmrFinalizeComment = function(id, text) {
-    var el = document.querySelector('span.htmr-comment[data-htmr-id="' + id + '"]');
-    if (!el) return;
-    el.setAttribute('data-htmr-text', text);
-    var arr = readComments();
-    arr.push({ id: id, text: text, quote: el.textContent, createdAt: new Date().toISOString() });
-    writeComments(arr);
-    flush();
-  };
-
-  window.__htmrCancelComment = function(id) {
-    var el = document.querySelector('span.htmr-comment[data-htmr-id="' + id + '"]');
-    if (!el) return;
-    var parent = el.parentNode;
-    while (el.firstChild) parent.insertBefore(el.firstChild, el);
-    parent.removeChild(el);
-  };
-
-  window.__htmrCaptureMentionParagraph = function() {
-    var sel = window.getSelection();
-    var node = sel && sel.anchorNode;
-    var el = node && (node.nodeType === 1 ? node : node.parentElement);
-    while (el && el !== document.body) {
-      var tag = el.tagName ? el.tagName.toLowerCase() : '';
-      if (['p','li','h1','h2','h3','h4','h5','h6','blockquote','td'].indexOf(tag) >= 0) break;
-      el = el.parentElement;
-    }
-    var text = el ? el.innerText : (sel ? sel.toString() : '');
-    window.webkit.messageHandlers.htmrBridge.postMessage({
-      type: 'mentionParagraph',
-      text: (text || '').trim()
-    });
-  };
-
-  // D11 영역 메모(드래그 풍선) — 주석 모드 토글.
-  var annotateOn = false;
-  var dragStart = null;
-  var currentRect = null;
-  var overlaySvg = null;
-  var bannerEl = null;
-
-  function ensureOverlay() {
-    if (document.getElementById('htmr-annotate-overlay')) return;
-    var div = document.createElement('div');
-    div.id = 'htmr-annotate-overlay';
-    div.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg"></svg>';
-    document.body.appendChild(div);
-    overlaySvg = div.querySelector('svg');
-
-    // 이미 본문 head에 박혀 있는 SVG annotation 복원.
-    var saved = document.getElementById('htmr-annotations');
-    if (saved) {
-      try {
-        var arr = JSON.parse(saved.textContent || '[]');
-        arr.forEach(function(a) { renderRect(a); });
-      } catch(e) {}
-    }
-  }
-
-  function renderRect(a) {
-    if (!overlaySvg) return;
-    var ns = 'http://www.w3.org/2000/svg';
-    var r = document.createElementNS(ns, 'rect');
-    r.setAttribute('x', a.x);
-    r.setAttribute('y', a.y);
-    r.setAttribute('width', a.w);
-    r.setAttribute('height', a.h);
-    r.setAttribute('class', 'htmr-annotate-rect');
-    r.setAttribute('data-htmr-annotation-id', a.id);
-    r.setAttribute('data-htmr-text', a.text || '');
-    r.addEventListener('mouseenter', function(e) { showAnnoTooltip(e, a.text || ''); });
-    r.addEventListener('mouseleave', hideAnnoTooltip);
-    overlaySvg.appendChild(r);
-  }
-
-  var tooltipEl = null;
-  function showAnnoTooltip(e, text) {
-    if (!text) return;
-    if (!tooltipEl) {
-      tooltipEl = document.createElement('div');
-      tooltipEl.className = 'htmr-annotate-tooltip';
-      document.body.appendChild(tooltipEl);
-    }
-    tooltipEl.textContent = text;
-    tooltipEl.style.left = (e.clientX + 8) + 'px';
-    tooltipEl.style.top = (e.clientY + 8) + 'px';
-    tooltipEl.style.display = 'block';
-  }
-  function hideAnnoTooltip() { if (tooltipEl) tooltipEl.style.display = 'none'; }
-
-  function readAnnotations() {
-    var el = document.getElementById('htmr-annotations');
-    if (!el) return [];
-    try { return JSON.parse(el.textContent || '[]'); } catch(e) { return []; }
-  }
-  function writeAnnotations(arr) {
-    var el = document.getElementById('htmr-annotations');
-    if (!el) {
-      el = document.createElement('script');
-      el.type = 'application/json';
-      el.id = 'htmr-annotations';
-      document.head.appendChild(el);
-    }
-    el.textContent = JSON.stringify(arr, null, 2);
-  }
-
-  window.__htmrToggleAnnotate = function() {
-    annotateOn = !annotateOn;
-    ensureOverlay();
-    document.body.classList.toggle('htmr-annotating', annotateOn);
-    if (annotateOn) {
-      if (!bannerEl) {
-        bannerEl = document.createElement('div');
-        bannerEl.className = 'htmr-annotate-banner';
-        bannerEl.textContent = '주석 모드 — 드래그해서 영역 그리기 (ESC 종료)';
-        document.body.appendChild(bannerEl);
-      }
-      bannerEl.style.display = 'block';
-    } else if (bannerEl) {
-      bannerEl.style.display = 'none';
-    }
-  };
-
-  function onOverlayDown(e) {
-    if (!annotateOn) return;
-    dragStart = { x: e.clientX, y: e.clientY };
-    var ns = 'http://www.w3.org/2000/svg';
-    currentRect = document.createElementNS(ns, 'rect');
-    currentRect.setAttribute('class', 'htmr-annotate-rect');
-    currentRect.setAttribute('x', e.clientX);
-    currentRect.setAttribute('y', e.clientY);
-    currentRect.setAttribute('width', 0);
-    currentRect.setAttribute('height', 0);
-    overlaySvg.appendChild(currentRect);
-  }
-  function onOverlayMove(e) {
-    if (!dragStart || !currentRect) return;
-    var x = Math.min(dragStart.x, e.clientX);
-    var y = Math.min(dragStart.y, e.clientY);
-    var w = Math.abs(e.clientX - dragStart.x);
-    var h = Math.abs(e.clientY - dragStart.y);
-    currentRect.setAttribute('x', x);
-    currentRect.setAttribute('y', y);
-    currentRect.setAttribute('width', w);
-    currentRect.setAttribute('height', h);
-  }
-  function onOverlayUp() {
-    if (!dragStart || !currentRect) { dragStart = null; return; }
-    var x = parseFloat(currentRect.getAttribute('x'));
-    var y = parseFloat(currentRect.getAttribute('y'));
-    var w = parseFloat(currentRect.getAttribute('width'));
-    var h = parseFloat(currentRect.getAttribute('height'));
-    if (w < 8 || h < 8) {
-      currentRect.remove();
-      currentRect = null; dragStart = null; return;
-    }
-    var id = 'a-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 7);
-    currentRect.setAttribute('data-htmr-annotation-id', id);
-    window.webkit.messageHandlers.htmrBridge.postMessage({
-      type: 'annotationRequest',
-      id: id,
-      rect: { x: x, y: y, w: w, h: h }
-    });
-    currentRect = null;
-    dragStart = null;
-  }
-
-  window.__htmrFinalizeAnnotation = function(id, text) {
-    var rect = document.querySelector('rect[data-htmr-annotation-id="' + id + '"]');
-    if (rect) {
-      if (!text) {
-        rect.remove();
-      } else {
-        var x = parseFloat(rect.getAttribute('x'));
-        var y = parseFloat(rect.getAttribute('y'));
-        var w = parseFloat(rect.getAttribute('width'));
-        var h = parseFloat(rect.getAttribute('height'));
-        rect.setAttribute('data-htmr-text', text);
-        rect.addEventListener('mouseenter', function(e) { showAnnoTooltip(e, text); });
-        rect.addEventListener('mouseleave', hideAnnoTooltip);
-        var arr = readAnnotations();
-        arr.push({ id: id, text: text, x: x, y: y, w: w, h: h, createdAt: new Date().toISOString() });
-        writeAnnotations(arr);
-        flush();
-      }
-    }
-    // 영역 메모 끝나면 자동으로 주석 모드 OFF — 사용자가 다시 ⌘K/+ 버튼 쓸 수 있게.
-    if (annotateOn) {
-      window.__htmrToggleAnnotate();
-    }
-  };
-
-  window.__htmrRemoveAnnotation = function(id) {
-    var rect = document.querySelector('rect[data-htmr-annotation-id="' + id + '"]');
-    if (rect) rect.remove();
-    var arr = readAnnotations().filter(function(a) { return a.id !== id; });
-    writeAnnotations(arr);
-    flush();
-  };
-
-  window.__htmrScrollToAnnotation = function(id) {
-    var rect = document.querySelector('rect[data-htmr-annotation-id="' + id + '"]');
-    if (!rect) return;
-    var y = parseFloat(rect.getAttribute('y')) || 0;
-    window.scrollTo({ top: Math.max(0, y - 120), behavior: 'smooth' });
-    // 잠깐 깜빡임
-    var origFill = rect.style.fill;
-    rect.style.fill = 'rgba(255,140,0,0.8)';
-    setTimeout(function() { rect.style.fill = origFill; }, 800);
-  };
-
-  window.addEventListener('DOMContentLoaded', function() {
-    document.body.setAttribute('contenteditable', 'true');
-    document.body.addEventListener('input', flush);
-    ensureOverlay();
-    if (overlaySvg) {
-      overlaySvg.addEventListener('mousedown', onOverlayDown);
-      overlaySvg.addEventListener('mousemove', onOverlayMove);
-      overlaySvg.addEventListener('mouseup', onOverlayUp);
-    }
-    document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape' && annotateOn) {
-        window.__htmrToggleAnnotate();
-      }
-    });
-  });
-
-  // ── 공동 작업 (htmr-sync, Y.js + y-websocket) ─────────
-  // 흐트므르 환경설정의 sync.* 값을 SwiftUI가 __htmrApplySync로 넘긴다.
-  // 켜져 있으면 Y.Text("body") ↔ document.body.innerHTML 단방향 sync (1차 단순).
-  // 라이브러리는 esm.sh CDN으로 동적 로드 — file:// 페이지에서도 가능.
-  var sync = { ws: null, doc: null, yText: null, applying: false, status: 'off' };
-
-  function setSyncBanner(text, color) {
-    var el = document.getElementById('htmr-sync-banner');
-    if (!text) {
-      if (el) el.remove();
-      return;
-    }
-    if (!el) {
-      el = document.createElement('div');
-      el.id = 'htmr-sync-banner';
-      el.style.cssText = 'position:fixed;bottom:10px;right:10px;padding:6px 12px;border-radius:14px;font-size:11px;font-weight:600;z-index:10001;box-shadow:0 2px 8px rgba(0,0,0,0.2);pointer-events:none;';
-      document.body.appendChild(el);
-    }
-    el.style.background = color || '#5b9bff';
-    el.style.color = '#fff';
-    el.textContent = text;
-  }
-
-  async function ensureYLibs() {
-    if (window.__Y && window.__YWebsocket) return;
-    const Y = await import('https://esm.sh/yjs@13?bundle');
-    const Wsm = await import('https://esm.sh/y-websocket@1.5?bundle');
-    window.__Y = Y;
-    window.__YWebsocket = Wsm;
-  }
-
-  window.__htmrApplySync = async function(opts) {
-    try {
-      if (!opts.enabled || !opts.url || !opts.token) {
-        if (sync.ws) { try { sync.ws.destroy(); } catch(e) {} }
-        sync.ws = null; sync.doc = null; sync.yText = null; sync.status = 'off';
-        setSyncBanner('', '');
-        return;
-      }
-      setSyncBanner('공동 작업 연결 중…', '#a0a0a0');
-      await ensureYLibs();
-      const Y = window.__Y;
-      const { WebsocketProvider } = window.__YWebsocket;
-
-      // 같은 doc로 재진입이면 그대로 (URL/token 변경 시 재연결)
-      if (sync.ws && sync.currentKey === opts.url + '|' + opts.token + '|' + opts.doc) {
-        setSyncBanner('공동 작업 · ' + opts.user, '#6fcf97');
-        return;
-      }
-      if (sync.ws) { try { sync.ws.destroy(); } catch(e) {} }
-
-      sync.doc = new Y.Doc();
-      sync.yText = sync.doc.getText('body');
-      sync.ws = new WebsocketProvider(opts.url, opts.doc, sync.doc, {
-        params: { token: opts.token }
-      });
-      sync.currentKey = opts.url + '|' + opts.token + '|' + opts.doc;
-
-      sync.ws.on('status', function(e) {
-        var s = e.status;
-        sync.status = s;
-        if (s === 'connected') {
-          setSyncBanner('공동 작업 · ' + opts.user, '#6fcf97');
-          // 첫 연결: 서버에 본문이 없으면 현재 본문으로 시드.
-          if (sync.yText.length === 0 && document.body.innerHTML.length > 0) {
-            sync.yText.insert(0, document.body.innerHTML);
-          } else if (sync.yText.length > 0) {
-            // 서버에 본문이 있으면 그것으로 갱신.
-            sync.applying = true;
-            document.body.innerHTML = sync.yText.toString();
-            sync.applying = false;
-          }
-        } else if (s === 'disconnected') {
-          setSyncBanner('공동 작업 끊김', '#c4582d');
-        } else {
-          setSyncBanner('공동 작업 · ' + s, '#a0a0a0');
-        }
-      });
-
-      // Y.text 변경 들어오면 body 갱신 (다른 사용자 입력).
-      sync.yText.observe(function() {
-        if (!sync.applying) {
-          sync.applying = true;
-          var newHTML = sync.yText.toString();
-          if (newHTML !== document.body.innerHTML) {
-            document.body.innerHTML = newHTML;
-          }
-          sync.applying = false;
-        }
-      });
-
-      // body 입력 시 Y.text에 통째 갱신 (1차 단순. 충돌 가능 — 다음 단계에 fine-grained).
-      document.body.addEventListener('input', function() {
-        if (sync.applying || !sync.yText) return;
-        sync.applying = true;
-        sync.doc.transact(function() {
-          sync.yText.delete(0, sync.yText.length);
-          sync.yText.insert(0, document.body.innerHTML);
-        });
-        sync.applying = false;
-      });
-    } catch (err) {
-      setSyncBanner('공동 작업 오류: ' + (err.message || err), '#c4582d');
-      console.error('htmr sync', err);
-    }
-  };
-})();
-</script><script type="application/json" id="htmr-annotations">[]</script></head>
-<body contenteditable="true" class="">
+</head>
+<body>
 
 <header class="hero">
   <div class="container hero-content">
@@ -1230,7 +768,7 @@ body.htmr-annotating { user-select: none; }
       크랩스의 PoC 청사진</h1>
     <p class="hero-subtitle">
       FC 콘텐츠 제작 생산성과 퀄리티 두 마리 토끼를 모두 잡아내는,<br>
-      GS리테일 PoC에서 검증된 크랩스의 솔루션과 실행 방법론
+      G사 PoC에서 검증된 크랩스의 솔루션과 실행 방법론
     </p>
     <div class="hero-meta">
       <div class="meta-item">
@@ -1309,15 +847,17 @@ body.htmr-annotating { user-select: none; }
     <span class="section-tag crabs">CRABS CORE PROPOSAL</span>
     <h2 class="section-title">크랩스의 핵심 제안:<br>19단계를 4단계로 줄였습니다</h2>
     <p class="section-desc">
-      GS리테일 PoC에서 입증한 단계 단축 방법론을 삼성생명 AI 서치에 그대로 이식합니다. "복잡한 워크플로우" 자체를 솔루션으로 흡수합니다.</p>
+      G사 PoC에서 입증한 단계 단축 방법론을 삼성생명 AI 서치에 그대로 이식합니다.
+      "복잡한 워크플로우" 자체를 솔루션으로 흡수합니다.
+    </p>
 
     <div class="solution-hero">
       <div class="solution-hero-grid">
         <div>
-          <div style="font-size: 14px; font-weight: 700; color: var(--crabs-primary); letter-spacing: 0.1em; margin-bottom: 12px;">GS리테일 적용 검증 사례</div>
+          <div style="font-size: 14px; font-weight: 700; color: var(--crabs-primary); letter-spacing: 0.1em; margin-bottom: 12px;">G사 적용 검증 사례</div>
           <h3 style="font-size: 28px; font-weight: 800; line-height: 1.25; margin-bottom: 16px;">"제작 단계 자체를 압축해 드립니다"</h3>
           <p style="font-size: 16px; color: var(--text-mid); line-height: 1.7; margin-bottom: 24px;">
-            GS샵 PD들은 영상 1개 만들 때 이미지 캡처 30분 → 스크립트 30분 → 음성·영상·편집을 오가며 19단계를 반복했습니다.
+            G사 PD들은 영상 1개 만들 때 이미지 캡처 30분 → 스크립트 30분 → 음성·영상·편집을 오가며 19단계를 반복했습니다.
             크랩스는 이 흐름을 단 4단계로 흡수하고, 시행착오의 단계 자체를 제거했습니다.
           </p>
           <div style="display: flex; gap: 24px; align-items: baseline;">
@@ -1363,12 +903,12 @@ body.htmr-annotating { user-select: none; }
       <div class="process-step">
         <div class="step-badge">STEP 1</div>
         <div class="step-title">제품 정보 입력</div>
-        <div class="step-desc">약관·교육자료·라이브TV 원고·설문 등</div><div class="step-desc">다양한 인풋 처리</div>
+        <div class="step-desc">약관·교육자료·라이브TV 원고·설문 등 다양한 인풋 처리</div>
       </div>
       <div class="process-step">
         <div class="step-badge">STEP 2</div>
         <div class="step-title">AI 자동 분석</div>
-        <div class="step-desc">제품 소구점·언론 반응·고객 리뷰까지</div><div class="step-desc">종합 분석 리포트</div>
+        <div class="step-desc">제품 소구점·언론 반응·고객 리뷰까지 종합 분석 리포트</div>
       </div>
       <div class="process-step">
         <div class="step-badge">STEP 3</div>
@@ -1378,7 +918,7 @@ body.htmr-annotating { user-select: none; }
       <div class="process-step">
         <div class="step-badge">STEP 4</div>
         <div class="step-title">영상 제작·편집</div>
-        <div class="step-desc">멀티 레퍼런스 9장 입력 → 생성 →&nbsp;</div><div class="step-desc">즉시 에디터 수정</div>
+        <div class="step-desc">멀티 레퍼런스 9장 입력 → 생성 → 즉시 에디터 수정</div>
       </div>
     </div>
   </div>
@@ -1400,10 +940,9 @@ body.htmr-annotating { user-select: none; }
             <h3>다양한 인풋 대응<br>모드별 커스터마이징</h3>
           </div>
         </div>
-        <p>입력되는 정보의 성격에 따라 분석 보드를 완전히 달리하여</p><p>약관·교육자료·뉴스·상점 정보 등 각 모드별 최적 분석 로직을 N개 분리 제공합니다.</p>
+        <p>입력되는 정보의 성격에 따라 분석 보드를 완전히 달리하여 약관·교육자료·뉴스·상점 정보 등 각 모드별 최적 분석 로직을 N개 분리 제공합니다.</p>
         <ul class="proposal-features">
           <li>약관 모드: 표 안의 표 구조까지 의미 단위 추출</li>
-          <li>뉴스 분석 모드: 인물·사건·트렌드 3축 분석</li>
           <li>교육자료 모드: 핵심 화법·니즈 환기 키워드 자동 추출</li>
           <li>키워드 단위가 아닌 문맥 단위 추출 기술 적용</li>
         </ul>
@@ -1417,12 +956,11 @@ body.htmr-annotating { user-select: none; }
             <h3>자막·음성·영상<br>3중 오버레이 퀄리티</h3>
           </div>
         </div>
-        <p>최종 발표·시연 환경에서 가장 민감한 립싱크·음성·자막 정합성 이슈를 원천 차단.&nbsp;</p><p>GS에서 이미 적용한 검증된 기술입니다.</p>
+        <p>최종 발표·시연 환경에서 가장 민감한 립싱크·음성·자막 정합성 이슈를 원천 차단. G사에서 이미 적용한 검증된 기술입니다.</p>
         <ul class="proposal-features">
-          <li>음성 어색함 발생 시 자동 오버레이 처리</li>
-          <li>자막 깨짐·오타 깨짐 현상 자동 검수</li>
-          <li>립싱크·음성 자막·정합성 검수로 최종 시연 안정성 확보</li>
-          <li>화면-음성 딜레이 이슈 대응 가이드 제공</li>
+          <li>필요 시 자주 수정이 필요한 영상·음성·자막 영역을 분리 구성</li>
+          <li>글자 깨짐·오탈자 등 자동 체크 후 수정 반영</li>
+          <li>립싱크·음성·자막 정합성 검수로 최종 시연 안정성 확보</li>
         </ul>
       </div>
 
@@ -1434,10 +972,10 @@ body.htmr-annotating { user-select: none; }
             <h3>컴플라이언스 자동<br>검증 모듈 추가</h3>
           </div>
         </div>
-        <p>"업계 최대" 같은 과장 표현, 금지 조항 위배 여부를 AI가 자체 판별해</p><p>보험 콘텐츠 신뢰도를 잃지 않으면서 재미를 살리는 균형점을 확보합니다.</p>
+        <p>"업계 최대" 같은 과장 표현, 금지 조항 위배 여부를 AI가 자체 판별해 보험 콘텐츠 신뢰도를 잃지 않으면서 재미를 살리는 균형점을 확보합니다.</p>
         <ul class="proposal-features">
           <li>삼성생명 내부 컴플라이언스 규정 학습 적용</li>
-          <li>걸린 항목과 근거 조항을 함께 제시</li>
+          <li>검증에 체크된 항목과 근거 조항을 함께 제시</li>
           <li>인포그래픽 오류·디자인 패턴 깨짐도 자동 검수</li>
           <li>장기적으로 고객 배포 가능 콘텐츠 자동 판별</li>
         </ul>
@@ -1451,7 +989,7 @@ body.htmr-annotating { user-select: none; }
             <h3>롱폼 → 숏폼<br>하이라이트 자동 추출</h3>
           </div>
         </div>
-        <p>기존 상품 강의·EBS 특강 등의 긴 영상을&nbsp;</p><p>수분 내에 하이라이트만 추출해 숏폼 형태로 바꿉니다. JTBC·KBO 등에 적용 중인</p><p>LTS(Long to Short) 기능입니다.</p>
+        <p>기존 롱폼형 강의 영상을 하이라이트 추출해 숏폼 형태로 바꿉니다. 홈쇼핑·방송국 등에 적용 중인 LTS(Long to Short) 기능입니다.</p>
         <ul class="proposal-features">
           <li>영상 전체를 텍스트 인덱싱 후 핵심 장면 추출</li>
           <li>채팅으로 "미국 금리 부분 찾아줘" 식 장면 검색</li>
@@ -1468,9 +1006,9 @@ body.htmr-annotating { user-select: none; }
             <h3>큐 기반 자동화<br>병렬 생성 시스템</h3>
           </div>
         </div>
-        <p>"신경 안 쓰시고 일하다가 보시면 완성돼 있는" 구조.&nbsp;</p><p>1분 영상 = Veo 8초 클립 × 8개 연장. 일일이 클릭 없이 큐가 차곡차곡 처리됩니다.</p>
+        <p>"신경 안 쓰시고 일하다가 보시면 완성돼 있는" 구조. 1분 영상 = Veo 8초 클립 × 8개 연장. 일일이 클릭 없이 큐가 차곡차곡 처리됩니다.</p>
         <ul class="proposal-features">
-          <li>영상 1개당 15~20분 생성 시간 자동 대기열 처리</li>
+          <li>영상 생성 시간 자동 대기열 처리</li>
           <li>병렬 처리로 다수 콘텐츠 동시 생성 가능</li>
           <li>앞부분 뉘앙스 이어짐 보장 / 일괄 생성 선택 옵션</li>
           <li>단일 생성 도구 의존도 완화</li>
@@ -1482,10 +1020,10 @@ body.htmr-annotating { user-select: none; }
           <div class="proposal-icon">🔐</div>
           <div>
             <div class="proposal-tag">PROPOSAL 06</div>
-            <h3>망분리 환경 대응<br>유연한 납품 형태</h3>
+            <h3>기업 내 보안 환경을<br>고려한 유연한 제작 형태</h3>
           </div>
         </div>
-        <p>삼성생명 내부 보안 환경을 그대로 존중. 외부 PC에서 작업 후 결과물만 들여오는&nbsp;</p><p>현재 운영 흐름을 깨지 않습니다.</p>
+        <p>삼성생명 내부 보안 환경을 그대로 존중. 외부 PC에서 작업 후 결과물만 들여오는 현재 운영 흐름을 깨지 않습니다.</p>
         <ul class="proposal-features">
           <li>기본: 인터넷 서비스 형태 제공</li>
           <li>고사양 요구 시: 전용 작업 환경 또는 별도 애플리케이션 제공</li>
@@ -1499,10 +1037,10 @@ body.htmr-annotating { user-select: none; }
           <div class="proposal-icon">🤝</div>
           <div>
             <div class="proposal-tag">PROPOSAL 07</div>
-            <h3>"같이 만들면서" 협업하는 운영 방식 — GS PoC 성공 공식 그대로</h3>
+            <h3>"같이 만들면서" 협업하는 운영 방식 — G사 PoC 성공 공식 그대로</h3>
           </div>
         </div>
-        <p>크랩스의 차별점은 솔루션을 던지고 끝나지 않는다는 것. 매주 정기 회의 + 품평회로 함께 만들어보며 메뉴·플로우·콘셉트를 같이 진화시킵니다.&nbsp;</p><p>삼성생명 파트 내부에서 만들고 있는 다음 주 신규 콘텐츠 1편부터 즉시 동시 제작에 들어갑니다.</p>
+        <p>크랩스의 차별점은 솔루션을 던지고 끝나지 않는다는 것. 매주 정기 회의 + 품평회로 함께 만들어보며 메뉴·플로우·콘셉트를 같이 진화시킵니다. 삼성생명 파트 내부에서 만들고 있는 다음 주 신규 콘텐츠 1편부터 즉시 동시 제작에 들어갑니다.</p>
         <ul class="proposal-features">
           <li>다음 주 콘텐츠 5편 + 인물·시나리오·기존 프롬프트 이력 공유 → 양사 동시 제작 시작</li>
           <li>"매뉴얼 만들 듯" 매뉴얼화 → 구축 전에 흐름과 프롬프트를 함께 설계</li>
@@ -1524,9 +1062,10 @@ body.htmr-annotating { user-select: none; }
         <span class="case-tag">✓ 검증된 성공 사례</span>
         <span class="case-tag">동일 방법론 적용</span>
       </div>
-      <h2 class="case-title">GS리테일에서 입증한<br>도전적 KPI의 실제 결과</h2>
+      <h2 class="case-title">G사에서 입증한<br>도전적 KPI의 실제 결과</h2>
       <p class="case-desc">
-        영상 콘텐츠가 실제 판매·전환에 영향을 줄 수 있는지는 보수적으로 보던 영역이었습니다.&nbsp;</p><p class="case-desc">&nbsp;크랩스는 PoC에서 이 도전적인 지표까지 정면으로 잡았고, 결과는 이렇게 나왔습니다.
+        영상 콘텐츠가 실제 판매·전환에 영향을 줄 수 있는지는 보수적으로 보던 영역이었습니다.
+        크랩스는 PoC에서 이 도전적인 지표까지 정면으로 잡았고, 결과는 이렇게 나왔습니다.
       </p>
       <div class="case-stats">
         <div class="case-stat">
@@ -1545,8 +1084,8 @@ body.htmr-annotating { user-select: none; }
     </div>
 
     <div class="quote-block">
-      <p class="quote-text">"GS는 회사 브랜드 기준이 있어요. 잘 팔리는 영상 기준 정해 주면 그 기준에 따라 만들고,&nbsp;</p><p class="quote-text">거기서 주요 장면을 찾아내 쇼츠화했습니다. 삼성생명 흐름에도 유사한 방식으로 적용 가능합니다."</p>
-      <p class="quote-author">— 김태영 대표 (크랩스)</p>
+      <p class="quote-text">"G사는 회사 브랜드 기준이 있어요. 잘 팔리는 영상 기준 정해 주면 그 기준에 따라 만들고, 거기서 주요 장면을 찾아내 쇼츠화했습니다. 삼성생명 흐름에도 유사한 방식으로 적용 가능합니다."</p>
+      <p class="quote-author">— 김태영 대표 / 변리사 / 박사 (크랩스)</p>
     </div>
   </div>
 </section>
@@ -1556,13 +1095,15 @@ body.htmr-annotating { user-select: none; }
     <span class="section-tag crabs">AGREED KPI</span>
     <h2 class="section-title">10월 평가 세션을 향한<br>합의된 핵심 KPI</h2>
     <p class="section-desc">
-      회의에서 양사가 합의한 KPI는 두 가지 축으로 정리됐습니다. &nbsp;삼성생명 AI 서치가 중요시하는 체류시간<span style="caret-color: rgb(26, 26, 46); color: rgb(26, 26, 46); font-size: 14px; background-color: rgb(255, 255, 255);">·</span>재방문 지표와 연결해 단순 제작 자동화를 넘어 플랫폼 이용 성과로 이어지는지를 확인합니다.</p>
+      회의에서 양사가 합의한 KPI는 두 가지 축으로 정리됐습니다.
+      삼성생명 AI 서치가 중요시하는 체류시간·재방문 지표와 연결해 단순 제작 자동화를 넘어 플랫폼 이용 성과로 이어지는지를 확인합니다.
+    </p>
 
     <div class="kpi-grid">
       <div class="kpi-card">
         <div class="kpi-rank">PRIMARY KPI · 정량</div>
-        <div class="kpi-name">📈 콘텐츠 생산성</div>
-        <div class="kpi-desc">사람의 공수를 줄이면서 콘텐츠 제작 개수와 다양성 확장.&nbsp;</div><div class="kpi-desc">GS 사례의 생산성 개선 구조를 삼성생명 흐름에 맞게 적용.</div>
+        <div class="kpi-name">📈 콘텐츠 생산성 / 다양성</div>
+        <div class="kpi-desc">사람의 공수를 줄이면서 콘텐츠 제작 개수와 다양성 확장. G사 사례의 생산성 개선 구조를 삼성생명 흐름에 맞게 적용.</div>
         <div class="kpi-metric">
           <span class="kpi-metric-icon">📊</span>
           <span class="kpi-metric-text"><strong>Before:</strong> 영업일 기준 하루 2~3개 → <strong>After:</strong> 제작량과 처리 속도 개선 목표</span>
@@ -1571,7 +1112,7 @@ body.htmr-annotating { user-select: none; }
       <div class="kpi-card">
         <div class="kpi-rank">PRIMARY KPI · 이용 성과</div>
         <div class="kpi-name">⏰ FC 체류 시간</div>
-        <div class="kpi-desc">핵심 이용 지표인 체류 시간과 재방문 흐름을 중심으로,</div><div class="kpi-desc">콘텐츠 수와 품질, 다양성이 리텐션으로 수렴하는지 확인.</div>
+        <div class="kpi-desc">핵심 이용 지표인 체류 시간과 재방문 흐름을 중심으로, 콘텐츠 수와 품질·다양성이 리텐션으로 수렴하는지 확인.</div>
         <div class="kpi-metric">
           <span class="kpi-metric-icon">🎯</span>
           <span class="kpi-metric-text"><strong>측정:</strong> 평균 콘텐츠 뷰 · 체류 시간 · DAU/MAU 듀레이션</span>
@@ -1579,20 +1120,11 @@ body.htmr-annotating { user-select: none; }
       </div>
       <div class="kpi-card">
         <div class="kpi-rank">SECONDARY · 추적 가능 시</div>
-        <div class="kpi-name">👆 클릭률 (CTR)</div>
-        <div class="kpi-desc">"보기 시작했다"는 양적 신호. 후킹 강화 옵션으로 첫 3초 시선 자극 효과 검증.</div>
+        <div class="kpi-name">📱 일/월간 활성 유저 추이</div>
+        <div class="kpi-desc">다양한 고품질 AI 영상으로 플랫폼 활성 수치를 끌어올리고, 자발적 유입 흐름을 형성합니다.</div>
         <div class="kpi-metric">
           <span class="kpi-metric-icon">🔥</span>
-          <span class="kpi-metric-text"><strong>전략:</strong> 강한 문제 제기 / 강한 긍정 후킹 A/B 옵션 제공</span>
-        </div>
-      </div>
-      <div class="kpi-card">
-        <div class="kpi-rank">SECONDARY · 입소문</div>
-        <div class="kpi-name">💬 콘텐츠 커버리지</div>
-        <div class="kpi-desc">"AI 서치 가니까 엄청 쉽게 설명해 놨던데" 입소문 유발.&nbsp;</div><div class="kpi-desc">아직 다루지 못한 구상품 영역까지 커버해 FC 유입 창구를 확장.</div>
-        <div class="kpi-metric">
-          <span class="kpi-metric-icon">🗣️</span>
-          <span class="kpi-metric-text"><strong>효과:</strong> 고정 배너 외 자발적 유입 채널 형성</span>
+          <span class="kpi-metric-text"><strong>전략:</strong> 다양하고 유익한 영상 대폭 확대</span>
         </div>
       </div>
     </div>
@@ -1605,7 +1137,8 @@ body.htmr-annotating { user-select: none; }
     <h2 class="section-title">PoC 너머의 확장 시나리오</h2>
     <p class="section-desc">
       평가 세션에서 가장 큰 가산점은 "확장 가능성"입니다.
-      크랩스는 PoC 단계에서 FC 콘텐츠에 집중하되,&nbsp;</p><p class="section-desc">그 너머의 채널까지 자연스럽게 이어지는 확장 경로를 함께 설계합니다.</p>
+      크랩스는 PoC 단계에서 FC 콘텐츠에 집중하되, 그 너머의 채널까지 자연스럽게 이어지는 확장 경로를 함께 설계합니다.
+    </p>
 
     <div class="extension-grid">
       <div class="extension-card">
@@ -1618,7 +1151,7 @@ body.htmr-annotating { user-select: none; }
         <div class="extension-icon">🛍️</div>
         <div class="extension-stage">EXTENSION 1</div>
         <div class="extension-name">삼성생명 다이렉트</div>
-        <div class="extension-desc">B2C 비대면 채널용 콘텐츠 —&nbsp;</div><div class="extension-desc">타 보험사 사례 보유</div>
+        <div class="extension-desc">B2C 비대면 채널용 콘텐츠<br>타 보험사 사례 보유</div>
       </div>
       <div class="extension-card">
         <div class="extension-icon">💼</div>
@@ -1635,7 +1168,7 @@ body.htmr-annotating { user-select: none; }
     </div>
 
     <div class="quote-block" style="margin-top: 56px;">
-      <p class="quote-text">"FC 콘텐츠에서 검증된 솔루션이 다이렉트·퇴직연금·브랜드 채널로 자연스럽게 이어지는 그림&nbsp;<span style="letter-spacing: -0.01em;">—&nbsp;</span></p><p class="quote-text"><span style="letter-spacing: -0.01em;">이 확장 가능성을 PoC 결과와 함께 평가 세션에서 함께 보여드리는 것이 크랩스의 목표입니다."</span></p>
+      <p class="quote-text">"FC 콘텐츠에서 검증된 솔루션이 다이렉트·퇴직연금·브랜드 채널로 자연스럽게 이어지는 그림 — 이 확장 가능성을 PoC 결과와 함께 평가 세션에서 함께 보여드리는 것이 크랩스의 목표입니다."</p>
       <p class="quote-author">— CRABS 운영 방향</p>
     </div>
   </div>
@@ -1766,15 +1299,15 @@ body.htmr-annotating { user-select: none; }
         <span class="next-step-num">ACTION 01</span>
         <div class="next-step-owner">CRABS · 크랩스</div>
         <h3 class="next-step-title">PoC 운영 계획서 작성</h3>
-        <p class="next-step-detail">KPI(생산성·체류시간), 기대 효과, 16주 단계별 일정, 인풋/아웃풋 정의를 담은&nbsp;</p><p class="next-step-detail">운영 계획서 작성하여 사전 송부</p>
+        <p class="next-step-detail">KPI(생산성·체류시간), 기대 효과, 16주 단계별 일정, 인풋/아웃풋 정의를 담은 운영 계획서 작성하여 사전 송부</p>
         <span class="next-step-due">📅 ~6월 8일(월) 송부</span>
       </div>
 
       <div class="next-step">
         <span class="next-step-num">ACTION 02</span>
         <div class="next-step-owner">SAMSUNG · 삼성생명</div>
-        <h3 class="next-step-title">다음 주 제작 콘텐츠 5편 + 인물·시나리오 공유</h3>
-        <p class="next-step-detail">파트가 다음 주 올려야 할 신규 콘텐츠(주인공 완성) 5편 시나리오 + 기존 만든 쇼츠 대표작 + 사용했던 프롬프트 이력</p>
+        <h3 class="next-step-title">다음 주 제작 콘텐츠 5편 + 신규캐릭터 시나리오 공유</h3>
+        <p class="next-step-detail">파트가 다음 주 올려야 할 신규 콘텐츠(신규캐릭터) 5편 시나리오 + 기존 만든 쇼츠 대표작 + 사용했던 프롬프트 이력</p>
         <span class="next-step-due">📅 ~6월 9일(화) 미팅 전</span>
       </div>
 
@@ -1782,15 +1315,15 @@ body.htmr-annotating { user-select: none; }
         <span class="next-step-num">ACTION 03</span>
         <div class="next-step-owner">SAMSUNG · 삼성생명</div>
         <h3 class="next-step-title">소스 자료 일부 전달</h3>
-        <p class="next-step-detail">약관·교육자료·상품설명서 등 인풋 소스 일부 공유&nbsp;</p><p class="next-step-detail">(제일 먼저 만들었으면 좋겠다 싶은 콘텐츠의 인풋 우선)</p>
+        <p class="next-step-detail">약관·교육자료·상품설명서 등 인풋 소스 일부 공유 (제일 먼저 만들었으면 좋겠다 싶은 콘텐츠의 인풋 우선)</p>
         <span class="next-step-due">📅 6월 초~중순</span>
       </div>
 
       <div class="next-step">
         <span class="next-step-num">ACTION 04</span>
         <div class="next-step-owner">CRABS · 크랩스</div>
-        <h3 class="next-step-title">웹사이트 직접 생성 권한 / 외부 페이지 공유</h3>
-        <p class="next-step-detail">삼성생명 측이 크랩스 생성 웹사이트에 직접 접속해 결과 확인 → 피드백&nbsp;</p><p class="next-step-detail">→ 함께 만들기 환경 구축</p>
+        <h3 class="next-step-title">웹사이트 직접 생성 권한 / 외부 페이지 공유 / 소통 창구 확정</h3>
+        <p class="next-step-detail">삼성생명 측이 크랩스 생성 웹사이트에 직접 접속해 결과 확인 → 피드백 → 함께 만들기 환경 구축 → 양사 소통 창구 확정</p>
         <span class="next-step-due">📅 6월 초</span>
       </div>
 
@@ -1798,7 +1331,7 @@ body.htmr-annotating { user-select: none; }
         <span class="next-step-num">ACTION 05 · 양사 공동</span>
         <div class="next-step-owner">JOINT · 6월 9일 미팅 안건</div>
         <h3 class="next-step-title">동일 콘텐츠 1편을 양사가 동시 제작 → 6/9 미팅에서 상호 시연 + 품평회</h3>
-        <p class="next-step-detail">삼성생명이 다음 주 만들 예정인 콘텐츠를 인풋으로, 크랩스도 동일 인풋으로 자체 솔루션으로 영상 제작. 6/9 미팅에서 두 결과물을 같이 보며 "이렇게 만들 수 있구나" 학습&nbsp;</p><p class="next-step-detail">+ 콘셉트/플로우/프롬프트 동시 진화. GS PoC에서 입증된 "매주 정기 회의 + 품평회" 운영 방식 그대로 적용.</p>
+        <p class="next-step-detail">삼성생명이 다음 주 만들 예정인 콘텐츠를 인풋으로, 크랩스도 동일 인풋으로 자체 솔루션으로 영상 제작. 6/9 미팅에서 두 결과물을 같이 보며 "이렇게 만들 수 있구나" 학습 + 콘셉트/플로우/프롬프트 동시 진화. G사 PoC에서 입증된 "매주 정기 회의 + 품평회" 운영 방식 그대로 적용.</p>
         <span class="next-step-due">📅 6월 9일(화) 오후 2시</span>
       </div>
 
@@ -1814,7 +1347,7 @@ body.htmr-annotating { user-select: none; }
         반복 업무는 줄이고,<br>창의적 영역은 더 넓혀 드립니다
       </h2>
       <p style="font-size: 17px; color: var(--text-mid); line-height: 1.75; max-width: 720px; margin: 0 auto 32px;">
-        GS리테일과 함께한 경험에서 얻은 크랩스의 약속입니다.<br>
+        지금까지 함께 작업한 기업들과의 경험에서 얻은 크랩스의 약속입니다.<br>
         AI 서치 파트가 스크립트·생성·검수 같은 반복 업무에서 벗어나<br>
         새로운 콘텐츠 포맷·확장 채널·고객 소구 영역으로 시야를 넓힐 수 있도록 —<br>
         그것이 크랩스가 정의한 PoC 성공의 본질입니다.
@@ -1831,11 +1364,10 @@ body.htmr-annotating { user-select: none; }
 <footer>
   <div class="container">
     <p><strong>크랩스 (CRABS)</strong> × <strong>삼성생명 신사업 추진 파트</strong> · PoC 회의록 시각화 자료</p>
-    <p style="margin-top: 8px;">회의일: 2026년 5월 28일 (목) 20:41 / 104분 39초 · 작성일: 2026년 5월 28일</p>
-    <p style="margin-top: 8px; opacity: 0.5;">참석자 (크랩스): 김태영 대표 · 이종권 · 정세호 · 김민준 / 참석자 (삼성생명): 신사업 파트 + AI 서치 파트 5인</p>
+    <p style="margin-top: 8px;">회의일: 2026년 5월 28일 (목) 20:41 / 104분 39초 · 작성일: 2026년 5월 29일</p>
+    <p style="margin-top: 8px; opacity: 0.5;">참석자 (크랩스): 김태영 대표 / 변리사 / 박사 · 이종권 · 정세호 · 김민준 / 참석자 (삼성생명): 신사업 파트 + AI 서치 파트 5인</p>
   </div>
 </footer>
 
-
-
-<div id="htmr-annotate-overlay"><svg xmlns="http://www.w3.org/2000/svg"></svg></div><div class="htmr-annotate-banner" style="display: none;">주석 모드 — 드래그해서 영역 그리기 (ESC 종료)</div></body></html>
+</body>
+</html>
